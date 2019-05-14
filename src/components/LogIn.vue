@@ -44,7 +44,6 @@ export default {
       })
     },
     login () {
-      var acc;
       this.$axios.post('http://localhost:9090/login',{
         id: this.acc,
         passwords:this.pass
@@ -52,13 +51,14 @@ export default {
         .then((responce) => {
           console.log((responce.data))
           this.message = responce.data;
+          this.signin()
         }).catch(function (error) {
         console.log(error)
       })
+    },
+    signin () {
+      this.$router.push('/signin')
     }
-
-
-
   }
 
 };
