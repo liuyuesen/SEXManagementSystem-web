@@ -1,46 +1,19 @@
 <template>
-  <div class="login-box">
-    <div class="login-logo">
-      <a href="#"><b>图书馆</b>登录</a>
+  <div id = 'div1'>
+    <h1>登录系统</h1>
+    <div id="div2">
+      <h2>账户</h2>
+      <input v-model="acc" placeholder="edit me"/>
     </div>
-    <!-- /.login-logo -->
-    <div class="login-box-body">
-      <p class="login-box-msg">Sign in to start your session</p>
-      <form action="/login" method="post">
-        <div class="form-group has-feedback">
-          <input type="text" name="userName" class="form-control" placeholder="name">
-          <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-        </div>
-        <div class="form-group has-feedback">
-          <input type="password" name="password" class="form-control" placeholder="Password">
-          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-        </div>
-        <div class="row">
-          <div class="col-xs-8">
-            <!--<div class="checkbox icheck">-->
-            <!--<label>-->
-            <!--<input type="checkbox"> Remember Me-->
-            <!--</label>-->
-            <!--</div>-->
-            <!--<div class="form-group" >-->
-            <select class="btn btn-warning" name="user_type">
-              <option value="10">用户类型</option>
-              <option value="0">学生</option>
-              <option value="1">管理员</option>
-            </select>
-            <!--</div>-->
-          </div>
-          <!-- /.col -->
-          <div class="col-xs-4">
-            <button type="submit" class="btn btn-primary btn-block btn-flat" >Sign In</button>
-          </div>
-        </div>
-        <div class="col-lg-1" style="float: right;">
+    <div id="div3">
+      <h2>密码</h2>
+      <input v-model="pass"/>
+      <button @click="login()">
+        提交
+      </button>
+      <p>{{message}}</p>
+    </div>
 
-        </div>
-      </form>
-    </div>
-    <!-- /.login-box-body -->
   </div>
 </template>
 
@@ -52,13 +25,13 @@ export default {
   data() {
     return {
       message: '1',
+      acc: '',
+      pass: ''
     }
   },
-  mounted:function () {
-    this.test();
-
-  },
-
+  // mounted:function () {
+  //   this.test();
+  // },
 
   methods: {
     test () {
@@ -66,10 +39,25 @@ export default {
         .then((responce) => {
           console.log((responce.data))
           this.message = responce.data;
-        }).catch(function (response) {
-        console.log(response)
+        }).catch(function (error) {
+        console.log(error)
+      })
+    },
+    login () {
+      var acc;
+      this.$axios.post('http://localhost:9090/login',{
+        id: this.acc,
+        passwords:this.pass
+      })
+        .then((responce) => {
+          console.log((responce.data))
+          this.message = responce.data;
+        }).catch(function (error) {
+        console.log(error)
       })
     }
+
+
 
   }
 
